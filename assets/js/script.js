@@ -157,3 +157,62 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+// === Chatbot Functionality ===
+
+// Open and close chat window
+const chatToggleBtn = document.querySelector(".chat-toggle");
+const chatBox = document.getElementById("chatBox");
+const userInput = document.getElementById("userInput");
+const chatMessages = document.getElementById("chatMessages");
+
+// Toggle chat visibility
+chatToggleBtn.addEventListener("click", () => {
+  chatBox.style.display = chatBox.style.display === "flex" ? "none" : "flex";
+});
+
+// Close chat on cross button
+const closeChatBtn = document.getElementById("closeChat");
+closeChatBtn.addEventListener("click", () => {
+  chatBox.style.display = "none";
+});
+
+// Handle Enter key to send message
+userInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    sendMessage();
+  }
+});
+
+// Send message function
+async function sendMessage() {
+  const userText = userInput.value.trim();
+  if (!userText) return;
+
+  // Display user message
+  chatMessages.innerHTML += `<div class="message"><b>You:</b> ${userText}</div>`;
+  chatMessages.innerHTML += `<div class="message" id="typing"><b>AI:</b> <i>Typing...</i></div>`;
+  userInput.value = "";
+  userInput.disabled = true;
+
+  try {
+    const res = await fetch("https://ritesh-chatbot.infy.uk/chatbot.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: userText })
+    });
+
+    const data = await res.json();
+
+    // Remove typing and show reply
+    document.getElementById("typing").remove();
+    chatMessages.innerHTML += `<div class="message"><b>AI:</b> ${data.reply}</div>`;
+  } catch (err) {
+    document.getElementById("typing").remove();
+    chatMessages.innerHTML += `<div class="message"><b>AI:</b> Error contacting chatbot.</div>`;
+  }
+
+  userInput.disabled = false;
+  userInput.focus();
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
