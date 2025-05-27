@@ -157,43 +157,32 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
-// === Chatbot Functionality ===
-
-// Open and close chat window
-const chatToggleBtn = document.querySelector(".chat-toggle");
-const chatBox = document.getElementById("chatBox");
-const userInput = document.getElementById("userInput");
-const chatMessages = document.getElementById("chatMessages");
-
-// Toggle chat visibility
-chatToggleBtn.addEventListener("click", () => {
-  chatBox.style.display = chatBox.style.display === "flex" ? "none" : "flex";
-});
-
-// Close chat on cross button
-const closeChatBtn = document.getElementById("closeChat");
-closeChatBtn.addEventListener("click", () => {
-  chatBox.style.display = "none";
-});
-
-// Handle Enter key to send message
-userInput.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    sendMessage();
+function toggleChat() {
+    const box = document.getElementById("chatBox");
+    box.style.display = box.style.display === "flex" ? "none" : "flex";
   }
-});
+  function closeChat() {
+    document.getElementById("chatBox").style.display = "none";
+  }
 
-// Send message function
-async function sendMessage() {
-  const userText = userInput.value.trim();
+
+  async function sendMessage() {
+  const input = document.getElementById("userInput");
+  const messages = document.getElementById("chatMessages");
+
+  const userText = input.value.trim();
   if (!userText) return;
 
-  // Display user message
-  chatMessages.innerHTML += `<div class="message"><b>You:</b> ${userText}</div>`;
-  chatMessages.innerHTML += `<div class="message" id="typing"><b>AI:</b> <i>Typing...</i></div>`;
-  userInput.value = "";
-  userInput.disabled = true;
+  // Show user's message
+  messages.innerHTML += `<div class="message"><b>You:</b> ${userText}</div>`;
+
+  // Add typing indicator
+  const typingId = `typing-${Date.now()}`;
+  messages.innerHTML += `<div class="message typing" id="${typingId}">AI is typing...</div>`;
+  messages.scrollTop = messages.scrollHeight;
+
+  input.value = "";
+  input.disabled = true;
 
   try {
     const res = await fetch("https://ritesh-chatbot.infy.uk/chatbot.php", {
@@ -201,18 +190,30 @@ async function sendMessage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: userText })
     });
-
     const data = await res.json();
 
-    // Remove typing and show reply
-    document.getElementById("typing").remove();
-    chatMessages.innerHTML += `<div class="message"><b>AI:</b> ${data.reply}</div>`;
+    // Remove typing indicator
+    const typingElement = document.getElementById(typingId);
+    if (typingElement) typingElement.remove();
+
+    // Show AI response
+    messages.innerHTML += `<div class="message"><b>AI:</b> ${data.reply}</div>`;
   } catch (err) {
-    document.getElementById("typing").remove();
-    chatMessages.innerHTML += `<div class="message"><b>AI:</b> Error contacting chatbot.</div>`;
+    const typingElement = document.getElementById(typingId);
+    if (typingElement) typingElement.remove();
+
+    messages.innerHTML += `<div class="message"><b>AI:</b> Error connecting to chatbot.</div>`;
   }
 
-  userInput.disabled = false;
-  userInput.focus();
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+  input.disabled = false;
+  input.focus();
+  messages.scrollTop = messages.scrollHeight;
 }
+
+  // 🔑 Add Enter key support
+  document.getElementById("userInput").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent form submission or default behavior
+      sendMessage();
+    }
+  });
