@@ -24,24 +24,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <!-- In your <head> tag -->
-<script src="https://cdn.botpress.cloud/webchat/v3.0/inject.js"></script>
-<style>
-  #webchat .bpWebchat {
-    position: unset;
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
-    max-width: 100%;
-  }
-
-  #webchat .bpFab {
-    display: none;
-  }
-</style>
-
-
-
 </head>
 
 <body>
@@ -939,6 +921,7 @@
                 </figure>
 
                 <div class="blog-content">
+
                   <div class="blog-meta">
                     <p class="blog-category">Informative</p>
 
@@ -1009,46 +992,11 @@
         </section>
 
       </article>
-      
-      <!-- Put this on your page BEFORE the script below -->
-<div id="webchat" style="width: 500px; height: 500px;"></div>
-  <!-- In your <body> tag -->
-<script>
-  // Open the web‑chat window as soon as it finishes loading
-  window.botpress.on("webchat:ready", () => {
-    window.botpress.open();
-  });
 
-  // Initialise the widget and pass in your bot’s config
-  window.botpress.init({
-  "botId": "ad6008a3-ec7b-493d-8bb9-93b3fbc3c2b7",
-  "configuration": {
-    "version": "v1",
-    "botName": "Ritesh Kandel Assistant",
-    "botDescription": "I can help you with questions about Ritesh Kandel’s work, software, and more!",
-    "website": {},
-    "email": {},
-    "phone": {},
-    "termsOfService": {},
-    "privacyPolicy": {},
-    "color": "#3276EA",
-    "variant": "solid",
-    "headerVariant": "glass",
-    "themeMode": "light",
-    "fontFamily": "inter",
-    "radius": 4,
-    "feedbackEnabled": true,
-    "footer": "[⚡ by Botpress](https://botpress.com/?from=webchat)",
-    "storageLocation": "localStorage"
-  }
-"clientId": "2489d995-97fe-46d7-ae5d-92861585ad7d",
-"selector": "#webchat"
-});
-</script>
-  
+    </div>
+
 
   </main>
-  
 
 
 
@@ -1056,9 +1004,6 @@
 
 
 
-  <!--
-    - custom js link
-  -->
   <script src="./assets/js/script.js"></script>
   
 
