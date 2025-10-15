@@ -33,6 +33,53 @@ const testimonialsModalFunc = function () {
   overlay.classList.toggle("active");
 }
 
+
+// Open blog post in-page when blog card is clicked
+const blogOpeners = document.querySelectorAll('[data-open-blog]');
+const activatePage = (pageName) => {
+  for (let i = 0; i < pages.length; i++) {
+    if (pages[i].dataset.page === pageName) {
+      pages[i].classList.add('active');
+    } else {
+      pages[i].classList.remove('active');
+    }
+  }
+  // update nav active state
+  for (let i = 0; i < navigationLinks.length; i++) {
+    if (navigationLinks[i].innerHTML.toLowerCase() === pageName) {
+      navigationLinks[i].classList.add('active');
+    } else {
+      navigationLinks[i].classList.remove('active');
+    }
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+for (let i = 0; i < blogOpeners.length; i++) {
+  blogOpeners[i].addEventListener('click', function (e) {
+    e.preventDefault();
+    activatePage('blog');
+    // optionally scroll to the embedded blog article
+    const blogArticle = document.querySelector('.blog');
+    if (blogArticle) {
+      blogArticle.classList.add('post-open');
+      blogArticle.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+}
+
+// Back button inside the blog post to return to teaser list
+const blogBackBtn = document.querySelector('.blog-back-btn');
+if (blogBackBtn) {
+  blogBackBtn.addEventListener('click', function () {
+    const blogArticle = document.querySelector('.blog');
+    if (blogArticle) blogArticle.classList.remove('post-open');
+    // keep the page active but scroll to top of blog teasers
+    const teasers = document.querySelector('.blog-posts-list');
+    if (teasers) teasers.scrollIntoView({ behavior: 'smooth' });
+  });
+}
+
 // add click event to all modal items
 for (let i = 0; i < testimonialsItem.length; i++) {
 

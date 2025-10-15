@@ -1,3 +1,48 @@
+/* Resume Button Card Styles */
+.resume-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 18px 0 28px 0;
+}
+
+
+.resume-card-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--orange-yellow-crayola);
+  box-shadow: var(--shadow-2);
+  border-radius: 14px;
+  padding: 10px 20px;
+  color: var(--smoky-black);
+  font-size: var(--fs-6);
+  font-weight: var(--fw-600);
+  transition: background var(--transition-1), box-shadow var(--transition-1), transform var(--transition-1);
+  border: none;
+  min-width: 150px;
+  max-width: 250px;
+  text-align: center;
+  cursor: pointer;
+}
+
+
+.resume-card-btn ion-icon {
+  font-size: 22px;
+  color: var(--eerie-black-1);
+  transition: color var(--transition-1);
+}
+
+
+.resume-card-btn:hover, .resume-card-btn:focus {
+  background: var(--white-1);
+  color: var(--orange-yellow-crayola);
+  box-shadow: var(--shadow-3);
+  transform: translateY(-2px) scale(1.03);
+}
+.resume-card-btn:hover ion-icon, .resume-card-btn:focus ion-icon {
+  color: var(--orange-yellow-crayola);
+}
 
 
 :root {
@@ -1028,7 +1073,8 @@ main {
   gap: 20px;
 }
 
-.blog-post-item > a {
+.blog-post-item > a,
+.blog-post-item > button.blog-link {
   position: relative;
   background: var(--border-gradient-onyx);
   height: 100%;
@@ -1037,7 +1083,8 @@ main {
   z-index: 1;
 }
 
-.blog-post-item > a::before {
+.blog-post-item > a::before,
+.blog-post-item > button.blog-link::before {
   content: "";
   position: absolute;
   inset: 1px;
@@ -1060,7 +1107,8 @@ main {
   transition: var(--transition-1);
 }
 
-.blog-post-item > a:hover .blog-banner-box img { transform: scale(1.1); }
+.blog-post-item > a:hover .blog-banner-box img,
+.blog-post-item > button.blog-link:hover .blog-banner-box img { transform: scale(1.1); }
 
 .blog-content { padding: 15px; }
 
@@ -1091,13 +1139,168 @@ main {
   transition: var(--transition-1);
 }
 
-.blog-post-item > a:hover .blog-item-title { color: var(--orange-yellow-crayola); }
+.blog-post-item > a:hover .blog-item-title,
+.blog-post-item > button.blog-link:hover .blog-item-title { color: var(--orange-yellow-crayola); }
 
 .blog-text {
   color: var(--light-gray);
   font-size: var(--fs-6);
   font-weight: var(--fw-300);
   line-height: 1.6;
+}
+
+/* When a post is opened, hide the teaser list */
+.blog.post-open .blog-posts-list { display: none; }
+
+.blog-back-btn {
+  display: inline-block;
+  margin-bottom: 12px;
+  background: transparent;
+  border: none;
+  color: var(--light-gray);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.blog-back-btn:hover { color: var(--orange-yellow-crayola); }
+
+/* When a post is opened, style the full article to match the teaser card */
+.blog.post-open .blog-posts > article.blog-post-item {
+  position: relative;
+  background: var(--border-gradient-onyx);
+  box-shadow: var(--shadow-4);
+  border-radius: 16px;
+  z-index: 1;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.blog.post-open .blog-posts > article.blog-post-item::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: var(--eerie-black-1);
+  z-index: -1;
+}
+
+.blog.post-open .blog-posts > article.blog-post-item .blog-post {
+  padding-top: 10px;
+  color: var(--light-gray);
+}
+
+/* Stronger visibility rules to prevent accidental hiding */
+.blog.post-open {
+  min-height: 420px;
+}
+
+.blog.post-open .blog-posts > article.blog-post-item {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+
+.blog.post-open .blog-posts > article.blog-post-item .blog-post p,
+.blog.post-open .blog-posts > article.blog-post-item .blog-post h4,
+.blog.post-open .blog-posts > article.blog-post-item .blog-post h2,
+.blog.post-open .blog-posts > article.blog-post-item .blog-post h3 {
+  color: var(--light-gray);
+}
+
+/* Blog article typography and spacing polish */
+.blog.post-open .blog-posts > article.blog-post-item {
+  max-width: 900px;
+  margin: 24px auto 40px;
+  padding: 28px 28px 36px;
+  box-sizing: border-box;
+}
+
+.blog.post-open .blog-posts > article.blog-post-item header {
+  margin-bottom: 18px;
+}
+
+.blog.post-open .blog-posts > article.blog-post-item header h2 {
+  font-size: var(--fs-1);
+  margin: 0 0 8px 0;
+  line-height: 1.15;
+  color: var(--white-2);
+}
+
+.blog.post-open .blog-posts > article.blog-post-item header h3 {
+  font-size: var(--fs-3);
+  margin: 0 0 6px 0;
+  color: var(--light-gray-70);
+  font-weight: var(--fw-400);
+}
+
+.blog.post-open .blog-posts > article.blog-post-item header time {
+  display: block;
+  color: var(--light-gray-70);
+  font-size: var(--fs-7);
+  margin-top: 6px;
+}
+
+.blog.post-open .blog-posts > article.blog-post-item .blog-post {
+  font-size: var(--fs-5);
+  line-height: 1.85;
+  color: var(--light-gray);
+}
+
+.blog.post-open .blog-posts > article.blog-post-item .blog-post h4 {
+  font-size: var(--fs-4);
+  margin-top: 22px;
+  margin-bottom: 10px;
+  color: var(--white-2);
+}
+
+.blog.post-open .blog-posts > article.blog-post-item .blog-post p {
+  margin-bottom: 14px;
+}
+
+.blog.post-open .blog-posts > article.blog-post-item .blog-back-btn {
+  display: inline-block;
+  margin: 0 0 14px 0;
+  padding: 6px 10px;
+  background: transparent;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  color: var(--light-gray-70);
+}
+
+.blog.post-open .blog-posts > article.blog-post-item .blog-back-btn:hover {
+  color: var(--orange-yellow-crayola);
+  background: rgba(255,255,255,0.02);
+}
+
+/* Responsive adjustments */
+@media (min-width: 780px) {
+  .blog.post-open .blog-posts > article.blog-post-item {
+    padding: 36px 42px 48px;
+  }
+
+  .blog.post-open .blog-posts > article.blog-post-item header h2 {
+    font-size: 28px; /* slightly larger on desktop */
+  }
+
+  .blog.post-open .blog-posts > article.blog-post-item .blog-post {
+    font-size: 16px;
+    line-height: 1.9;
+  }
+}
+
+@media (max-width: 479px) {
+  .blog.post-open .blog-posts > article.blog-post-item {
+    padding: 18px 16px 24px;
+    margin: 12px;
+  }
+
+  .blog.post-open .blog-posts > article.blog-post-item header h2 {
+    font-size: 20px;
+  }
+
+  .blog.post-open .blog-posts > article.blog-post-item .blog-post {
+    font-size: var(--fs-6);
+  }
 }
 
 
